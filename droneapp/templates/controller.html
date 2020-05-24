@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .controller-box{
+        text-align: center;
+    }
+    .myDiv {
+  border: 5px outset orange;
+  background-color: black;
+  text-align: center;
+  color:green;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  margin: 2px 1px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.button1 {background-color: #DE6100;} /* orange */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+<script>
+    function sendCommand(command, params={}) {
+        console.log({action: 'sendCommand', command: command, params: params});
+        params['command'] = command;
+        $.post("/api/command/", params).done(function (json) {
+            console.log({action: 'sendCommand', json: json});
+        }, 'json')
+    }
+
+    $(document).on('pageinit', function() {
+        $('#slider-speed').on("slidestop", function (event) {
+            let params = {
+                speed: $("#slider-speed").val(),
+            };
+            sendCommand('speed', params);
+        });
+    });
+
+</script>
+
+<div class="controller-box">
+    <h1>Virtual Controller</h1>
+</div>
+
+<div class="controller-box">
+    <div data-role="controlgroup" data-type="horizontal" class="myDiv">
+        <a href="#" data-role="button" onclick="sendCommand('takeOff'); return false;" class="button button1">Take Off</a>
+        <a href="#" data-role="button" onclick="sendCommand('land'); return false;" class="button button1">Land</a>
+    </div>
+</div>
+
+
+<div style="display: flex; justify-content: center;">
+    <table style="align-self: center;">
+        <td>
+            <div style="text-align: center;" class="button button2">
+                <div class="ui-nodisc-icon ui-alt-icon">
+                    <a id="up" href="#"
+                       class="ui-btn ui-shadow ui-corner-all ui-icon-carat-u
+                              ui-btn-icon-notext ui-btn-inline"
+                       onclick="sendCommand('up'); return false;"></a>
+                </div>
+                <div class="ui-nodisc-icon ui-alt-icon">
+                   <a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-forward
+                                      ui-btn-icon-notext ui-btn-inline"
+                      onclick="sendCommand('clockwise'); return false;"></a>
+                   <a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-back
+                                      ui-btn-icon-notext ui-btn-inline"
+                      onclick="sendCommand('counterClockwise'); return false;"></a>
+                </div>
+                <div class="ui-nodisc-icon ui-alt-icon">
+                    <a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-carat-d
+                                       ui-btn-icon-notext ui-btn-inline"
+                       onclick="sendCommand('down'); return false;"></a>
+                </div>
+            </div>
+        </td>
+
+        <td>
+            <div style="text-align: center;" class="button button2">
+                <div class="ui-nodisc-icon ui-alt-icon">
+                    <a href="#"
+                       class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-u
+                                       ui-btn-icon-notext ui-btn-inline"
+                       onclick="sendCommand('forward'); return false;"></a>
+                </div>
+                <div class="ui-nodisc-icon ui-alt-icon">
+                   <a href="#"
+                      class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-l
+                             ui-btn-icon-notext ui-btn-inline"
+                      onclick="sendCommand('left'); return false;"></a>
+                   <a href="#"
+                      class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-r
+                             ui-btn-icon-notext ui-btn-inline"
+                      onclick="sendCommand('right'); return false;"></a>
+                </div>
+                <div class="ui-nodisc-icon ui-alt-icon">
+                    <a href="#"
+                       class="ui-btn ui-shadow ui-corner-all ui-icon-arrow-d
+                              ui-btn-icon-notext ui-btn-inline"
+                       onclick="sendCommand('back'); return false;"></a>
+                </div>
+            </div>
+        </td>
+    </table>
+</div>
+
+<div class="button button1">
+    <h3>Speed</h3>
+    <input type="range" name="slider-2" id="slider-speed" data-highlight="true" min="0" max="100" value="10">
+</div>
+
+<div class="controller-box">
+    <h3>Flip</h3>
+    <div data-role="controlgroup" data-type="horizontal" class="button button1">
+        <a href="#" data-role="button" data-inline="true" onclick="sendCommand('flipFront'); return false;" class="button button2">Forward</a>
+        <a href="#" data-role="button" data-inline="true" onclick="sendCommand('flipLeft'); return false;" class="button button2">Left</a>
+        <a href="#" data-role="button" data-inline="true" onclick="sendCommand('flipRight'); return false;" class="button button2">Right</a>
+        <a href="#" data-role="button" data-inline="true" onclick="sendCommand('flipBack'); return false;" class="button button2">Back</a>
+    </div>
+</div>
+
+<div class="controller-box">
+    <h3>ADVANCED MODE</h3>
+    <div data-role="controlgroup" data-type="horizontal" class="button button1">
+        <a href="#" data-role="button" data-inline="true" onclick="sendCommand('patrol'); return false;"; class="button button2";>Patrol</a>
+        <a href="#" data-role="button" data-inline="true" onclick="sendCommand('stopPatrol'); return false;"; class="button button2";>Stop Patrol</a>
+        <a href="#" data-role="button" data-inline="true" onclick="sendCommand('faceDetectAndTrack'); return false;"; class="button button2";>Face Detect And Track</a>
+        <a href="#" data-role="button" data-inline="true" onclick="sendCommand('stopFaceDetectAndTrack'); return false;"; class="button button2";>Stop Face Detect And Track</a>
+    </div>
+    <br>
+    <img src="/video/streaming">
+</div>
+
+
+{% endblock %}

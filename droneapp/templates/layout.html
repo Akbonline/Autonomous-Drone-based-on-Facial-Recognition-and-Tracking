@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/jquery.mobile-1.4.5.min.css" />
+</head>
+<style>
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  margin: 2px 1px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.button1 {background-color: #DE6100;} /* orange */
+.button2 {background-color: #008CBA;} /* Blue */
+.myDiv {
+  border: 5px outset orange;
+  background-color: white;
+  text-align: center;
+  color:green;
+}
+body { background-image:url("/static/img/graphs.gif"); background-repeat:repeat; }
+</style>
+<body class="body">
+<div class="myDiv">
+<div class="container-fluid" align="center">
+	<div class="row" align = "center">
+		<div class="myDiv" align="center">
+			<div class="row" align="center">
+				<div class="col-md-12" data-role="header">
+					<h3 class="text-center">
+						Drone World
+					</h3>
+				</div>
+			</div>
+			<div data-role="content" >
+           {% block content %}{% endblock %}
+       </div>
+		</div>
+        <div class="myDiv">
+
+					<a href="/" data-icon="home" data-dom-cache="false" class="button button1" type="button">
+						Home
+					</a>
+                    <a href="/controller/" class="button button1" type="button">Controller</a>
+				</div>
+	</div>
+</div>
+</div>
+</body>
+</html>
